@@ -39,7 +39,7 @@ Questo progetto fornisce una **applicazione GUI** in Python per visualizzare spe
 
 ## Configurazione
 
-All’inizio di `visualizer_spectrogram_range_10.py` definire:
+All’inizio di `visualizer.py` definire:
 
 - `fileH5`: percorso alla cartella dei file `.h5`
 - `filePKL`: percorso alla cartella dei file `.pkl`
@@ -52,7 +52,10 @@ All’inizio di `visualizer_spectrogram_range_10.py` definire:
 2. Installare i prerequisiti:
    ```bash
    pip install h5py numpy pandas matplotlib
-python visualizer.py
+
+3. Avviare l’applicazione:
+   ```bash
+   python visualizer.py
 
 4. Nella finestra GUI:
    - Selezionare il file H5 dalla tendina.
