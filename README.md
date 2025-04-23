@@ -22,11 +22,17 @@ awds (il modulo contenente Spectra)
 Struttura del Progetto
 project_root/
 ├── visualizer_spectrogram_range_10.py  # Applicazione principale GUI
+
 ├── histogram.py                        # Modulo per plot istogrammi
+
 ├── utils/                              # Eventuali script di utilità
+
 ├── data/
+
 │   ├── fileH5/     # Folder contenente file .h5 di input
+
 │   └── filePKL/    # Folder contenente file .pkl con le detection
+
 └── README.md                           # Questo file
 
 Configurazione
