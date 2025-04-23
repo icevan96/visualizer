@@ -41,14 +41,14 @@ Questo progetto fornisce una **applicazione GUI** in Python per visualizzare spe
 
 All’inizio di `visualizer.py` definire:
 
-- `fileH5`: percorso alla cartella dei file `.h5`
-- `filePKL`: percorso alla cartella dei file `.pkl`
+- `H5_FOLDER`: percorso alla cartella dei file `.h5`
+- `PKL_FOLDER`: percorso alla cartella dei file `.pkl`
 - `SAMPLING_FREQUENCY`: frequenza di campionamento (es. 51200 Hz)
 - `COLORMAPS`: lista di colormap disponibili per il plot
 
 ## Utilizzo
 
-1. Assicurarsi di avere i file `.h5` nella cartella `fileH5` e i corrispondenti `.pkl` in `filePKL`.
+1. Assicurarsi di avere i file `.h5` nella cartella `H5_FOLDER` e i corrispondenti `.pkl` in `PKL_FOLDER`.
 2. Installare i prerequisiti:
    ```bash
    pip install h5py numpy pandas matplotlib
