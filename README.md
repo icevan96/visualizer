@@ -85,6 +85,8 @@ python visualizer.py
 ├── src/
 │   ├── plotting.py
 │   └── whistler_detection_visualizer.py
+├── visualizer/
+│   └── visualizer.exe
 ├── histogram.py
 ├── visualizer.py
 └── README.md
