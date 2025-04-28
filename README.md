@@ -72,13 +72,21 @@ python visualizer.py
 ## Project Structure
 
 ```
-├── visualizer.py
-├── run_awds.py
-├── awds_visualizer/
+├── awds/
+│   ├── adaptive_threshold.py
+│   └── awds_with_persistence.py
+│   └── demeter.py
+│   └── detector.py
+│   └── efd.py
+│   └── persistence.py
+│   └── reader.py
+│   └── spectra.py
+│   └── whistler.py
+├── src/
 │   ├── plotting.py
 │   └── whistler_detection_visualizer.py
 ├── histogram.py
-├── requirements.txt
+├── visualizer.py
 └── README.md
 ```
 
