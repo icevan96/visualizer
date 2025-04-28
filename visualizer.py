@@ -28,14 +28,13 @@ import awds.awds_with_persistence as awds_util
 from awds.awds_with_persistence import AWDS
 from awds.persistence import StoreEFD
 
-
 # Local modules
 import src.plotting as plotting
 from src.plotting import SpectrogramPlot
 from src.whistler_detection_visualizer import WhistlerDetectionVisualizer
 from histogram import HistogramPlotter
 
-# Libreria reverse_geocode
+# Libreria reverse_geocode (geolocalizzazione)
 import reverse_geocoder as rg
 import pycountry_convert as pc
 
@@ -57,7 +56,7 @@ def center_window(win, width, height):
     y = (screen_h - height) // 2
     win.geometry(f"{width}x{height}+{x}+{y}")
 
-
+# Helper per avvio tool AWDS
 def run_awds(filepath, debug=False):
         """
         Crea il .pkl per il file H5 dato, replicando run_awds.py --path.
@@ -69,7 +68,6 @@ def run_awds(filepath, debug=False):
         directory = os.path.dirname(filepath)
         filename  = os.path.basename(filepath)
 
-        # esattamente come in run_awds.process_file:
         awds.main(reader, store, directory, filename, debug_enabled=debug)
 
 
@@ -132,9 +130,9 @@ class App:
             return
         self.show_file_details(path)
 
-
+    # Finestra Dettagli
     def show_file_details(self, filepath):
-        # Leggi metadati in modo robusto
+        # Leggi metadati
         try:
             with h5py.File(filepath, 'r') as f:
                 utc_raw  = f['UTC_TIME'][:].flatten()
@@ -174,8 +172,8 @@ class App:
         # Crea finestra di dettaglio in modal
         self.details_win = tk.Toplevel(self.root)
         self.details_win.title("Dettagli file H5")
-        self.details_win.transient(self.root)      # la rende figlia modale
-        self.details_win.grab_set()                # cattura tutti gli eventi
+        self.details_win.transient(self.root)      
+        self.details_win.grab_set()                
         center_window(self.details_win, 500, 300)
 
         frm = ttk.Frame(self.details_win, padding=10)
@@ -200,7 +198,7 @@ class App:
         # Fermo l'esecuzione qui fino a che details_win non viene chiusa
         self.root.wait_window(self.details_win)
     
-
+    # Finestra Selection 
     def _finish_selection(self, filepath):
         # Salva stato precedente per rollback
         self._prev_selected_base     = self.selected_base
@@ -314,7 +312,7 @@ class App:
         reader = EFD()
         vlf    = reader.read(os.path.dirname(filepath), os.path.basename(filepath))
 
-        # Se non ci sono burst → rollback e avviso
+        # Se non ci sono burst -> rollback e avviso
         if not vlf.split:
             self.selected_base     = prev_base
             self.selected_filepath = prev_filepath
@@ -644,7 +642,7 @@ class App:
         reader = EFD()
         vlf    = reader.read(dirpath, h5_name)
 
-        # Se split è None o lista vuota → rollback e avviso
+        # Se split è None o lista vuota -> rollback e avviso
         if not vlf.split:
             # rollback della selezione
             prev_base = getattr(self, '_prev_selected_base', None)
@@ -691,7 +689,7 @@ class App:
         self.update_spec_pages()
         self.show_spec_page()
 
-        # Prepara e mostra detections/immagini
+        # Prepara e mostra detections
         self._clear_detections_frame()
 
         # Aggiorna istogramma
@@ -899,7 +897,7 @@ class App:
                 Image.LANCZOS
             )
 
-        # *** Padding per larghezza minima (dopo il resize) ***
+        # Padding per larghezza minima (dopo il resize)
         w0, h0 = img.size
         if w0 < MIN_DET_WIDTH:
             # Creo un'immagine bianca della larghezza minima
@@ -908,7 +906,6 @@ class App:
             x_off = (MIN_DET_WIDTH - w0) // 2
             new_img.paste(img, (x_off, 0))
             img = new_img
-        # *** Fine patch ***
 
         # Converte in PhotoImage e mostra
         photo = ImageTk.PhotoImage(img)
