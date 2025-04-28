@@ -941,6 +941,9 @@ class App:
 
 def main():
     root = tk.Tk()
+    # imposta l'icona della finestra
+    icon_path = os.path.join(os.path.dirname(__file__), 'assets', 'icon.ico')
+    root.iconbitmap(icon_path)
     App(root)
     root.mainloop()
 
