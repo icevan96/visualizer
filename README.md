@@ -1,86 +1,98 @@
-# Visualizer Spectrogram AWDS
+# AWDS Visualizer
 
-Questo progetto fornisce una **applicazione GUI** in Python per visualizzare spettrogrammi di segnali VLF estratti da file HDF5 e per sovrapporre le detection di whistler generate dal tool **AWDS**. Include inoltre un modulo per la rappresentazione istogrammi delle detections.
+A desktop application per esplorare l’output del **Automatic Whistler Detection System (AWDS)**.  
+Carica file `.h5`, genera detections (PKL) e naviga interattivamente tra spettrogrammi, anteprime e istogrammi.
 
-## Caratteristiche
+---
 
-- Calcolo e plot interattivo dello spettrogramma di un file HDF5
-- Visualizzazione dei rettangoli di detection (Start_Time, End_Time, Start_Freq, End_Freq, D0)
-- Possibilità di filtrare detections in base a range temporale e frequenziale
-- Esplorazione grafica di intervalli personalizzati
-- Istogramma delle detections nel tempo
+## Features
 
-## Prerequisiti
+- **Apri & Ispeziona**  
+  - Modale con metadata H5: intervallo temporale, lat/lon, luogo geocodificato.  
+- **Generazione PKL integrata**  
+  - AWDS in-process.  
+- **Navigazione Spettrogrammi**  
+  - Paginazione, zoom scalabile, filtro interattivo su soglia `D0`.  
+- **Browser Detections**  
+  - Anteprime dei kernel di whistler, navigazione Next/Prev.  
+- **Tab Istogramma**  
+  - Distribuzione dei parametri di detection (`D0`, frequenza, durata).  
 
-- Python 3.8+
-- Librerie Python:
-  - `h5py`
-  - `numpy`
-  - `pandas`
-  - `matplotlib`
-  - `tkinter` (incluso nella distribuzione standard di Python su Windows/Mac)
-  - `awds` (il modulo contenente `Spectra`)
+---
 
-## Struttura del Progetto
-├── visualizer_spectrogram_range_10.py  # Applicazione principale GUI
+## Requirements
 
-├── histogram.py                        # Modulo per plot istogrammi
+- **Python** ≥ 3.8  
+- **Tkinter** (incluso con Python)  
+- **AWDS library** (nel `PYTHONPATH`)  
+- **Dipendenze Python**:  
+  ```bash
+  pip install pandas numpy h5py pillow matplotlib reverse_geocoder pycountry_convert tqdm joblib
+  ```
 
-├── utils/                              # Eventuali script di utilità
+---
 
-├── data/
+## Installation
 
-│   ├── fileH5/     # Folder contenente file .h5 di input
-
-│   └── filePKL/    # Folder contenente file .pkl con le detection
-
-└── README.md                           # Questo file
-
-
-## Configurazione
-
-All’inizio di `visualizer.py` definire:
-
-- `H5_FOLDER`: percorso alla cartella dei file `.h5`
-- `PKL_FOLDER`: percorso alla cartella dei file `.pkl`
-- `SAMPLING_FREQUENCY`: frequenza di campionamento (es. 51200 Hz)
-- `COLORMAPS`: lista di colormap disponibili per il plot
-
-## Utilizzo
-
-1. Assicurarsi di avere i file `.h5` nella cartella `H5_FOLDER` e i corrispondenti `.pkl` in `PKL_FOLDER`.
-2. Installare i prerequisiti:
+1. Clona il repository:
    ```bash
-   pip install h5py numpy pandas matplotlib
-
-3. Avviare l’applicazione:
+   git clone https://github.com/your-org/awds-visualizer.git
+   cd awds-visualizer
+   ```
+2. _(Opzionale)_ Crea e attiva un virtual environment:
    ```bash
-   python visualizer.py
+   python -m venv venv
+   source venv/bin/activate       # macOS/Linux
+   venv\Scripts\activate.bat      # Windows
+   ```
+3. Installa le dipendenze:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Nella finestra GUI:
-   - Selezionare il file H5 dalla tendina.
-   - Abilitare/disabilitare le detections con la checkbox.
-   - Selezionare intervalli di inizio/fine per analisi puntuali.
-   - Scegliere la colormap.
-   - Premere **Plot** per disegnare il grafico nella scheda "Intervallo".
-   - Usare il tab **Istogramma** per visualizzare la distribuzione temporale delle detections.
+---
 
-## Esempio di Interfaccia
+## Usage
 
-- **Tab “Visualizzazione”**: spettrogramma full-chunk con overlay dei rettangoli di detection.
-- **Tab “Intervallo”**: spettrogramma di un sotto-intervallo selezionato.
-- **Tab “Istogramma”**: grafico a barre del numero di events in base all’istante di inizio.
+```bash
+python visualizer.py
+```
 
-## Moduli Principali
+1. Clicca **Apri** e seleziona un file `.h5`.  
+2. Nella finestra **Dettagli file H5** clicca **Finish**.  
+3. Se il `.pkl` non esiste, premi **Genera PKL**.  
+4. Naviga tra le tab:  
+   - **Spettrogramma**: paginazione, zoom e filtro `D0`.  
+   - **Detections**: scorrimento anteprime.  
+   - **Istogramma**: distribuzione dei parametri.  
+   - **Dettagli**: metadata H5.
 
-- `load_signal_and_time(h5_file)`: legge il segnale da `A131_W` e il timestamp iniziale da `UTC_TIME`.
-- `plot_spectrogram_section(...)`: calcola e visualizza spettrogramma + detections.
-- `plot_spectrogram_basic_section(...)`: spettrogramma di un intervallo senza overlay.
-- `HistogramPlotter`: classe per generare l’istogramma delle detection (definita in `histogram.py`).
+---
 
-## Personalizzazioni
+## Project Structure
 
-- Modificare `COLORMAPS` per aggiungere nuove mappe.
-- In `plot_spectrogram_section` è possibile filtrare ulteriormente le detections modificando i criteri su `df` (ad es. range di `D0` o di frequenza).
+```
+├── visualizer.py
+├── run_awds.py
+├── awds_visualizer/
+│   ├── plotting.py
+│   └── whistler_detection_visualizer.py
+├── histogram.py
+├── requirements.txt
+└── README.md
+```
 
+---
 
+## Contributing
+
+1. **Fork** del repo  
+2. **Branch** di feature:  
+   ```bash
+   git checkout -b feature/tuo-branch
+   ```
+3. **Commit** delle modifiche:  
+   ```bash
+   git commit -m "Descrizione delle modifiche"
+   ```
+4. **Push** e apri **Pull Request**.
