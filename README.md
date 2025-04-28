@@ -1,6 +1,6 @@
 # AWDS Visualizer
 
-A desktop application per esplorare l’output del **Automatic Whistler Detection System (AWDS)**.  
+All'interno della cartella visualizer è presente una desktop application per esplorare l’output del **Automatic Whistler Detection System (AWDS)**.  
 Carica file `.h5`, genera detections (PKL) e naviga interattivamente tra spettrogrammi, anteprime e istogrammi.
 
 ---
